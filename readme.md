@@ -20,7 +20,7 @@
 2. **Conecte-se à internet** (`iwctl` para Wi-Fi ou cabo automático)
 3. **Baixe o script**:
    ```bash
-   curl -O https://raw.githubusercontent.com/seu-usuario/seu-repositorio/main/archwizard.sh
+   curl -O https://github.com/gustavoventieri/ArchWizard
    ```
 4. **Dê permissão de execução**:
    ```bash
@@ -28,7 +28,7 @@
    ```
 5. **Execute o script**:
    ```bash
-   bash archwizard.sh
+   bash ./archwizard.sh
    ```
 
 ## 🔧 Configuração Manual
