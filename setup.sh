@@ -92,7 +92,7 @@ genfstab -U -p /mnt >> /mnt/etc/fstab
 
 
 echo "===== Entrando no Sistema Instalado ====="
-arch-chroot /mnt
+arch-chroot /mnt /bin/bash <<EOF
 
 
 
@@ -162,6 +162,7 @@ echo "===== Configurando Interface Grafica e Rede ====="
 systemctl enable gdm
 systemctl enable NetworkManager
 
+EOF
 
 echo "===== Finalizando Instalação ====="
 exit 
