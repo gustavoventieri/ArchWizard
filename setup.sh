@@ -127,7 +127,6 @@ echo "Defina uma senha para o usuário $USERNAME:"
 passwd $USERNAME
 
 
-
 echo "===== Instalando Ferramentas para Dual Boot e Internet ====="
 pacman -S dosfstools os-prober mtools network-manager-applet wpa_supplicant dialog
 
@@ -143,7 +142,7 @@ echo "===== Configurando Grub ====="
 grub-mkconfig -o /boot/grub/grub.cfg
 
 echo "===== Configurando Sudo ====="
-echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
+echo "%wheel ALL=(ALL:ALL) ALL" >> /etc/sudoers
 
 echo "===== Instalando Interface Grafica ====="
 pacman -S xorg-server xorg-xinit xorg-apps mesa
@@ -156,7 +155,8 @@ sudo pacman -S virtualbox-guest-utils
 
 echo "===== Instalando Tipo De Interface Grafica ====="
 pacman -S gnome-extra gnome-terminal
-pacman -S plasma-desktop konsole    
+pacman -S plasma-desktop konsole   
+pacman -S gdm 
 
 echo "===== Configurando Interface Grafica e Rede ====="
 systemctl enable gdm
