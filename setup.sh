@@ -44,8 +44,6 @@ fi
 
 
 read -p "Digite o nome do usuário: " USERNAME
-read -p "Digite o nome da máquina (hostname): " HOSTNAME
-
 
 echo "===== Atualizando relógio ====="
 timedatectl set-ntp true
