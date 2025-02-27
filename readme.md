@@ -20,23 +20,23 @@
 2. **Conecte-se à internet** (`iwctl` para Wi-Fi ou cabo automático)
 3. **Baixe o script**:
    ```bash
-   curl -O https://github.com/gustavoventieri/ArchWizard
+   curl -O https://github.com/gustavoventieri/ArchWizard/blob/master/setup.sh
    ```
 4. **Dê permissão de execução**:
    ```bash
-   chmod +x archwizard.sh
+   chmod +x setup.sh
    ```
 5. **Execute o script**:
    ```bash
-   bash ./archwizard.sh
+   bash ./setup.sh
    ```
 
 ## 🔧 Configuração Manual
 
-Caso queira modificar o script antes da execução, edite o arquivo `archwizard.sh`:
+Caso queira modificar o script antes da execução, edite o arquivo `setup.sh`:
 
 ```bash
-nano archwizard.sh
+nano setup.sh
 ```
 
 ## 🛠️ Requisitos
