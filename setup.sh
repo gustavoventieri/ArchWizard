@@ -62,9 +62,9 @@ parted -s $DISK mkpart primary btrfs 513MiB 50GiB
 # Partição Home
 parted -s $DISK mkpart primary btrfs 50GiB 100%  
 
-mkfs.fat -F32 {$DISK}1        
-mkfs.btrfs {$DISK}2            
-mkfs.btrfs {$DISK}3           
+mkfs.fat -F32 ${DISK}1        
+mkfs.btrfs ${DISK}2            
+mkfs.btrfs ${DISK}3           
 
 
 
