@@ -20,13 +20,9 @@
 2. **Conecte-se à internet** (`iwctl` para Wi-Fi ou cabo automático)
 3. **Baixe o script**:
    ```bash
-   curl -O https://github.com/gustavoventieri/ArchWizard/blob/master/setup.sh
+   curl -O https://raw.githubusercontent.com/gustavoventieri/ArchWizard/refs/heads/master/setup.sh
    ```
-4. **Dê permissão de execução**:
-   ```bash
-   chmod +x setup.sh
-   ```
-5. **Execute o script**:
+4. **Execute o script**:
    ```bash
    bash ./setup.sh
    ```
