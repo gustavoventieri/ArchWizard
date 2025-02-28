@@ -84,13 +84,9 @@ genfstab -U -p /mnt >> /mnt/etc/fstab
 echo "===== Entrando no Sistema Instalado ====="
 arch-chroot /mnt <<EOF
 
-
-
 echo "===== Configurando Fuso Horário ====="
 ln -sf /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
 hwclock --systohc
-
-
 
 echo "===== Configurando Locale ====="
 echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
@@ -98,10 +94,17 @@ echo "pt_BR.UTF-8 UTF-8" >> /etc/locale.gen
 locale-gen
 echo "LANG=pt_BR.UTF-8" > /etc/locale.conf  
 
+echo "===== Definindo Senha do Root ====="
+echo "root:$SENHA_ROOT" | chpasswd
 
+echo "===== Criando Usuário Final ====="
+useradd -m -g users -G wheel,storage,power -s /bin/bash $USERNAME
 
-echo "===== Configurando Teclado ====="
-echo KEYMAP=br-abnt2 >> /etc/vconsole.conf
+echo "Defina uma senha para o usuário $USERNAME:"
+passwd $USERNAME
+
+echo "===== Configurando Sudo ====="
+echo "%wheel ALL=(ALL:ALL) ALL" >> /etc/sudoers
 
 EOF
 
