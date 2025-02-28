@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e 
+set -e
 echo -e "
   ___           _       _    _ _                  _                     
  / _ \         | |     | |  | (_)                | |   
@@ -66,15 +66,11 @@ mkfs.btrfs ${DISK}3
 
 
 echo "===== Montando Partições ====="
-mount ${DISK}3 /mnt
-mkdir -p /mnt/home
-mkdir -p /mnt/boot
-mkdir -p /mnt/boot/efi
+mount ${DISK}3 /mnt                   
+mkdir -p /mnt/home /mnt/boot /mnt/boot/efi
 
-mount ${DISK}3 /mnt/home
-mount ${DISK}1 /mnt/boot
-mkdir -p /mnt/boot/efi
-mount ${DISK}1 /mnt/boot/efi
+mount ${DISK}1 /mnt/boot              
+mount ${DISK}1 /mnt/boot/efi          
 
 
 
