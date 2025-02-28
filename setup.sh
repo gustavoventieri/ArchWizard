@@ -130,7 +130,7 @@ echo "===== Instalando Ferramentas para Configurar o Grub ====="
 pacman -S grub efibootmgr
 
 echo "===== Instalando GRUB ====="
-grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=arcg_grub --recheck
+grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=arch_grub --recheck
 
 echo "===== Configurando Grub ====="
 grub-mkconfig -o /boot/grub/grub.cfg
