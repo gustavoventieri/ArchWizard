@@ -86,7 +86,7 @@ genfstab -U -p /mnt >> /mnt/etc/fstab
 
 
 echo "===== Entrando no Sistema Instalado ====="
-arch-chroot /mnt /bin/bash <<EOF
+arch-chroot /mnt <<EOF
 
 
 
