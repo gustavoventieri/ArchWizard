@@ -57,7 +57,7 @@ parted -s $DISK set 1 esp on
 parted -s $DISK mkpart primary btrfs 20GiB 50GiB  
 
 # Partição Home
-parted -s $DISK mkpart primary btrfs 50GiB 100%  
+parted -s $DISK mkpart primary btrfs 50GiB 100%
 
 mkfs.fat -F32 ${DISK}1        
 mkfs.btrfs ${DISK}2            
@@ -66,13 +66,13 @@ mkfs.btrfs ${DISK}3
 
 
 echo "===== Montando Partições ====="
-mount ${DISK}3 /mnt                   
-mkdir -p /mnt/home /mnt/boot /mnt/boot/efi
+mount ${DISK}2 /mnt
+mkdir -p /mnt/boot/efi /mnt/home
 
-mount ${DISK}1 /mnt/boot              
-mkdir -p /mnt/boot/efi
-mount ${DISK}1 /mnt/boot/efi          
+mkdir /mnt/boot/efi
+mount ${DISK}1 /mnt/boot/efi
 
+mount ${DISK}3 /mnt/home
 
 
 echo "===== Instalando Base do Sistema ====="
