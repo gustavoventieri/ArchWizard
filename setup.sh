@@ -50,14 +50,10 @@ echo "===== Particionando Disco ====="
 parted -s $DISK mklabel gpt
 
 # Partição EFI
-parted -s $DISK mkpart ESP fat32 512MiB 1GiB
-parted -s $DISK set 1 esp on
-
-# Partição Root
-parted -s $DISK mkpart primary btrfs 20GiB 50GiB  
-
-# Partição Home
-parted -s $DISK mkpart primary btrfs 50GiB 100%
+parted -s ${DISK} mkpart primary fat32 0% 1GB
+parted -s ${DISK} set 1 boot on
+parted -s ${DISK} mkpart primary btrfs 1GB 51GB
+parted -s ${DISK} mkpart primary btrfs 51GB 100%
 
 mkfs.fat -F32 ${DISK}1        
 mkfs.btrfs ${DISK}2            
