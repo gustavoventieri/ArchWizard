@@ -1,9 +1,6 @@
 #!/bin/bash
 
 set -e 
-
-#!/bin/bash
-
 echo -e "
   ___           _       _    _ _                  _                     
  / _ \         | |     | |  | (_)                | |   
@@ -113,12 +110,11 @@ echo "LANG=pt_BR.UTF-8" > /etc/locale.conf
 echo "===== Configurando Teclado ====="
 echo KEYMAP=br-abnt2 >> /etc/vconsole.conf
 
-
+EOF
 
 echo "===== Definindo Senha do Root ====="
 echo "Defina uma senha para o root:"
 passwd
-
 
 echo "===== Criando Usuário Final ====="
 useradd -m -g users -G wheel,storage,power -s /bin/bash $USERNAME
@@ -126,6 +122,8 @@ useradd -m -g users -G wheel,storage,power -s /bin/bash $USERNAME
 echo "Defina uma senha para o usuário $USERNAME:"
 passwd $USERNAME
 
+echo "===== Configurando Sudo ====="
+echo "%wheel ALL=(ALL:ALL) ALL" >> /etc/sudoers
 
 echo "===== Instalando Ferramentas para Dual Boot e Internet ====="
 pacman -S dosfstools os-prober mtools network-manager-applet wpa_supplicant dialog
@@ -133,16 +131,12 @@ pacman -S dosfstools os-prober mtools network-manager-applet wpa_supplicant dial
 echo "===== Instalando Ferramentas para Configurar o Grub ====="
 pacman -S grub efibootmgr
 
-
-
 echo "===== Instalando GRUB ====="
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=arcg_grub --recheck
 
 echo "===== Configurando Grub ====="
 grub-mkconfig -o /boot/grub/grub.cfg
 
-echo "===== Configurando Sudo ====="
-echo "%wheel ALL=(ALL:ALL) ALL" >> /etc/sudoers
 
 echo "===== Instalando Interface Grafica ====="
 pacman -S xorg-server xorg-xinit xorg-apps mesa
@@ -156,13 +150,11 @@ sudo pacman -S virtualbox-guest-utils
 echo "===== Instalando Tipo De Interface Grafica ====="
 pacman -S gnome-extra gnome-terminal
 pacman -S plasma-desktop konsole   
-pacman -S gdm 
+pacman -S gdm
 
 echo "===== Configurando Interface Grafica e Rede ====="
 systemctl enable gdm
 systemctl enable NetworkManager
-
-EOF
 
 echo "===== Finalizando Instalação ====="
 exit 
