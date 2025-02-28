@@ -69,7 +69,6 @@ echo "===== Montando Partições ====="
 mount ${DISK}2 /mnt
 mkdir -p /mnt/boot/efi /mnt/home
 
-mkdir /mnt/boot/efi
 mount ${DISK}1 /mnt/boot/efi
 
 mount ${DISK}3 /mnt/home
