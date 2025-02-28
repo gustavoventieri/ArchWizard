@@ -122,7 +122,6 @@ echo "===== Configurando Sudo ====="
 echo "%wheel ALL=(ALL:ALL) ALL" >> /etc/sudoers
 
 echo "===== Instalando Ferramentas para Dual Boot e Internet ====="
-pacman -Syyuu --noconfirm
 pacman -S dosfstools os-prober mtools network-manager-applet wpa_supplicant dialog
 
 echo "===== Instalando Ferramentas para Configurar o Grub ====="
