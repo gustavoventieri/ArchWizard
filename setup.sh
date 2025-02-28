@@ -70,6 +70,7 @@ mount ${DISK}2 /mnt
 mkdir -p /mnt/boot/efi /mnt/home
 
 mount ${DISK}1 /mnt/boot/efi
+mount ${DISK}1 /mnt/boot
 
 mount ${DISK}3 /mnt/home
 
