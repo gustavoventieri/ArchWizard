@@ -101,7 +101,7 @@ echo "%wheel ALL=(ALL:ALL) ALL" >> /etc/sudoers
 EOF
 
 echo "===== Definindo Senha do Root ====="
-echo "root:$SENHA_ROOT" | chpasswd
+passwd
 
 echo "===== Criando Usuário Final ====="
 useradd -m -g users -G wheel,storage,power -s /bin/bash $USERNAME
