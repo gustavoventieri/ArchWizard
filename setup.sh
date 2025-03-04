@@ -66,14 +66,10 @@ mkfs.btrfs ${DISK}2
 mkfs.btrfs ${DISK}3           
 
 
-mount ${DISK}3 /mnt
-mkdir -p /mnt/home
-mkdir -p /mnt/boot
-mkdir -p /mnt/boot/efi
+mount ${DISK}2 /mnt
+mkdir -p /mnt/home /mnt/boot/efi
 
 mount ${DISK}3 /mnt/home
-mount ${DISK}1 /mnt/boot
-mkdir -p /mnt/boot/efi
 mount ${DISK}1 /mnt/boot/efi
 
 
