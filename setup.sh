@@ -108,27 +108,23 @@ pacman -S dosfstools os-prober mtools network-manager-applet wpa_supplicant dial
 pacman -S grub efibootmgr
 
 
-
-grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=arcg_grub --recheck
-
+grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=arch_grub --recheck
 grub-mkconfig -o /boot/grub/grub.cfg
 
-echo "%wheel ALL=(ALL:ALL) ALL" >> /etc/sudoers
+pacman -S xorg-server xorg-xinit xorg-apps mesa --noconfirm
 
-pacman -S xorg-server xorg-xinit xorg-apps mesa
+sudo pacman -S xf86-video-amdgpu --noconfirm
+sudo pacman -S xf86-video-intel --noconfirm
+sudo pacman -S nvidia nvidia-settings --noconfirm
+sudo pacman -S virtualbox-guest-utils --noconfirm
 
-sudo pacman -S xf86-video-amdgpu
-sudo pacman -S xf86-video-intel
-sudo pacman -S nvidia nvidia-settings
-sudo pacman -S virtualbox-guest-utils
-
-pacman -S gnome-extra gnome-terminal
-pacman -S plasma-desktop konsole   
-pacman -S gdm 
+pacman -S gnome-extra gnome-terminal --noconfirm
+pacman -S plasma-desktop konsole --noconfirm
+pacman -S gdm --noconfirm
 
 systemctl enable gdm
 systemctl enable NetworkManager
 
+EOF
 
-exit 
 reboot
