@@ -43,14 +43,11 @@ read -p "Digite uma senha para root: " ROOT_PASSWORD
 read -p "Digite o nome do usuário: " USERNAME
 read -p "Digite a senha do usuário: " PASSWORD
 
-echo "===== Atualizando relógio ====="
 timedatectl set-ntp true
 
 
-echo "===== Particionando Disco ====="
 parted -s $DISK mklabel gpt
 
-# Partição EFI
 parted -s ${DISK} mkpart primary fat32 0% 1GB
 parted -s ${DISK} set 1 boot on
 parted -s ${DISK} mkpart primary btrfs 1GB 51GB
@@ -61,8 +58,6 @@ mkfs.btrfs ${DISK}2
 mkfs.btrfs ${DISK}3           
 
 
-
-echo "===== Montando Partições ====="
 mount ${DISK}2 /mnt
 mkdir -p /mnt/boot/efi /mnt/home
 
@@ -72,73 +67,55 @@ mount ${DISK}1 /mnt/boot
 mount ${DISK}3 /mnt/home
 
 
-echo "===== Instalando Base do Sistema ====="
 pacstrap /mnt base base-devel linux-zen linux-firmware nano dhcpcd 
 
-
-
-echo "===== Gerando fstab ====="
 genfstab -U -p /mnt >> /mnt/etc/fstab
 
 
-
-echo "===== Entrando no Sistema Instalado ====="
 arch-chroot /mnt <<EOF
 
-echo "===== Configurando Fuso Horário ====="
+
 ln -sf /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
 hwclock --systohc
 
-echo "===== Configurando Locale ====="
+
 echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
 echo "pt_BR.UTF-8 UTF-8" >> /etc/locale.gen
 locale-gen
 echo "LANG=pt_BR.UTF-8" > /etc/locale.conf  
 
 
-echo "root:${ROOT_PASSWORD}" | sudo chpasswd
+echo "root:arch" | sudo chpasswd
 
 useradd -m -g users -G wheel, storage, power -s /bin/bash kazz
 
-echo "${USERNAME}:${PASSWORD}" | sudo chpasswd
+echo "arch:arch" | sudo chpasswd
 
 
-echo "===== Configurando Sudo ====="
 echo "%wheel ALL=(ALL:ALL) ALL" >> /etc/sudoers
 
-echo "===== Instalando Ferramentas para Dual Boot e Internet ====="
 pacman -S dosfstools os-prober mtools network-manager-applet wpa_supplicant dialog --noconfirm
 
-echo "===== Instalando Ferramentas para Configurar o Grub ====="
 pacman -S grub efibootmgr
 
-echo "===== Instalando GRUB ====="
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=arch_grub --recheck
 
-echo "===== Configurando Grub ====="
 grub-mkconfig -o /boot/grub/grub.cfg
 
 
-echo "===== Instalando Interface Grafica ====="
 pacman -S xorg-server xorg-xinit xorg-apps mesa
 
-echo "===== Subir Drive de Video ====="
 sudo pacman -S xf86-video-amdgpu
 sudo pacman -S xf86-video-intel
 sudo pacman -S nvidia nvidia-settings
 sudo pacman -S virtualbox-guest-utils
 
-echo "===== Instalando Tipo De Interface Grafica ====="
 pacman -S gnome-extra gnome-terminal
 pacman -S plasma-desktop konsole   
 pacman -S gdm
 
-echo "===== Configurando Interface Grafica e Rede ====="
 systemctl enable gdm
-systemctl enable NetworkManager
-
-echo "===== Finalizando Instalação ====="
-exit 
+systemctl enable NetworkManager 
 
 EOF
 
