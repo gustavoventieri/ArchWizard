@@ -39,15 +39,9 @@ if [[ "$CONFIRM" != "s" ]]; then
     exit 1
 fi
 
-read -p "Digite uma senha para root: " ROOT_PASSWORD
-read -p "Digite o nome do usuário: " USERNAME
-read -p "Digite a senha do usuário: " PASSWORD
-
-timedatectl set-ntp true
-
+load-keys br-abnt2
 
 parted -s $DISK mklabel gpt
-
 parted -s ${DISK} mkpart primary fat32 0% 1GB
 parted -s ${DISK} set 1 boot on
 parted -s ${DISK} mkpart primary btrfs 1GB 51GB
@@ -61,13 +55,10 @@ mkfs.btrfs ${DISK}3
 mount ${DISK}2 /mnt
 mkdir -p /mnt/boot/efi /mnt/home
 
-mount ${DISK}1 /mnt/boot/efi
-mount ${DISK}1 /mnt/boot
-
 mount ${DISK}3 /mnt/home
+mount ${DISK}1 /mnt/boot/efi
 
-
-pacstrap /mnt base base-devel linux-zen linux-firmware nano dhcpcd 
+pacstrap /mnt base base-devel linux linux-firmware nano dhcpcd 
 
 genfstab -U -p /mnt >> /mnt/etc/fstab
 
@@ -91,9 +82,6 @@ useradd -m -g users -G wheel, storage, power -s /bin/bash kazz
 
 echo "arch:arch" | sudo chpasswd
 
-
-echo "%wheel ALL=(ALL:ALL) ALL" >> /etc/sudoers
-
 pacman -S dosfstools os-prober mtools network-manager-applet wpa_supplicant dialog --noconfirm
 
 pacman -S grub efibootmgr
@@ -102,17 +90,16 @@ grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=arch_
 
 grub-mkconfig -o /boot/grub/grub.cfg
 
-
-pacman -S xorg-server xorg-xinit xorg-apps mesa
+pacman -S xorg-server xorg-xinit xorg-apps mesa --noconfirm
 
 sudo pacman -S xf86-video-amdgpu
 sudo pacman -S xf86-video-intel
 sudo pacman -S nvidia nvidia-settings
 sudo pacman -S virtualbox-guest-utils
 
-pacman -S gnome-extra gnome-terminal
-pacman -S plasma-desktop konsole   
-pacman -S gdm
+pacman -S gnome-extra gnome-terminal --noconfirm
+pacman -S plasma-desktop konsole --noconfirm 
+pacman -S gdm --noconfirm
 
 systemctl enable gdm
 systemctl enable NetworkManager 
