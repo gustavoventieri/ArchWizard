@@ -39,7 +39,7 @@ if [[ "$CONFIRM" != "s" ]]; then
     exit 1
 fi
 
-load-keys br-abnt2
+loadkeys br-abnt2
 
 parted -s $DISK mklabel gpt
 parted -s ${DISK} mkpart primary fat32 0% 1GB
