@@ -100,15 +100,6 @@ echo "%wheel ALL=(ALL:ALL) ALL" >> /etc/sudoers
 
 EOF
 
-echo "===== Definindo Senha do Root ====="
-passwd
-
-echo "===== Criando Usuário Final ====="
-useradd -m -g users -G wheel,storage,power -s /bin/bash $USERNAME
-
-echo "Defina uma senha para o usuário $USERNAME:"
-passwd $USERNAME
-
 echo "===== Configurando Sudo ====="
 echo "%wheel ALL=(ALL:ALL) ALL" >> /etc/sudoers
 
