@@ -42,6 +42,8 @@ if [[ "$CONFIRM" != "s" ]]; then
     exit 1
 fi
 
+loadkeys br-abnt2
+
 read -p "Digite o nome do usuário: " USERNAME
 
 timedatectl set-ntp true
