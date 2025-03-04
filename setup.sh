@@ -44,10 +44,7 @@ fi
 
 loadkeys br-abnt2
 
-read -p "Digite o nome do usuário: " USERNAME
-
 timedatectl set-ntp true
-
 
 parted -s $DISK mklabel gpt
 
