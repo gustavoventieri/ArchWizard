@@ -39,8 +39,9 @@ if [[ "$CONFIRM" != "s" ]]; then
     exit 1
 fi
 
-
+read -p "Digite uma senha para root: " ROOT_PASSWORD
 read -p "Digite o nome do usuário: " USERNAME
+read -p "Digite a senha do usuário: " PASSWORD
 
 echo "===== Atualizando relógio ====="
 timedatectl set-ntp true
@@ -95,19 +96,21 @@ locale-gen
 echo "LANG=pt_BR.UTF-8" > /etc/locale.conf  
 
 
-echo "===== Configurando Sudo ====="
-echo "%wheel ALL=(ALL:ALL) ALL" >> /etc/sudoers
+echo "root:${ROOT_PASSWORD}" | sudo chpasswd
 
-EOF
+useradd -m -g users -G wheel, storage, power -s /bin/bash kazz
+
+echo "${USERNAME}:${PASSWORD}" | sudo chpasswd
+
 
 echo "===== Configurando Sudo ====="
 echo "%wheel ALL=(ALL:ALL) ALL" >> /etc/sudoers
 
 echo "===== Instalando Ferramentas para Dual Boot e Internet ====="
-pacman -Sy dosfstools os-prober mtools network-manager-applet wpa_supplicant dialog --noconfirm
+pacman -S dosfstools os-prober mtools network-manager-applet wpa_supplicant dialog --noconfirm
 
 echo "===== Instalando Ferramentas para Configurar o Grub ====="
-pacman -Sy grub efibootmgr
+pacman -S grub efibootmgr
 
 echo "===== Instalando GRUB ====="
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=arch_grub --recheck
@@ -136,4 +139,7 @@ systemctl enable NetworkManager
 
 echo "===== Finalizando Instalação ====="
 exit 
+
+EOF
+
 reboot
