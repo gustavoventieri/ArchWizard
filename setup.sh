@@ -31,7 +31,6 @@ _/j  L l\_!  _//^---^\\_
 "
 
 
-
 lsblk
 read -p "Digite o disco onde deseja instalar (exemplo: /dev/sda ou /dev/nvme0n1): " DISK
 
@@ -70,13 +69,10 @@ mount ${DISK}3 /mnt/home
 mount ${DISK}1 /mnt/boot/efi
 
 
-
 pacstrap /mnt base base-devel linux-zen linux-firmware nano dhcpcd 
 
 
-
 genfstab -U -p /mnt >> /mnt/etc/fstab
-
 
 
 arch-chroot /mnt <<EOF
@@ -85,7 +81,6 @@ arch-chroot /mnt <<EOF
 
 ln -sf /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
 hwclock --systohc
-
 
 
 echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
