@@ -82,7 +82,7 @@ genfstab -U -p /mnt >> /mnt/etc/fstab
 
 
 
-arch-chroot /mnt
+arch-chroot /mnt <<EOF
 
 
 
@@ -95,22 +95,13 @@ echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
 echo "pt_BR.UTF-8 UTF-8" >> /etc/locale.gen
 locale-gen
 echo "LANG=pt_BR.UTF-8" > /etc/locale.conf  
-
-
-
 echo KEYMAP=br-abnt2 >> /etc/vconsole.conf
 
 
+echo "root:arch" | sudo chpasswd
 
-echo "Defina uma senha para o root:"
-passwd
-
-
-useradd -m -g users -G wheel,storage,power -s /bin/bash $USERNAME
-
-echo "Defina uma senha para o usuário $USERNAME:"
-passwd $USERNAME
-
+useradd -m -g users -G wheel, storage, power -s /bin/bash arch
+echo "arch:arch" | sudo chpasswd
 
 pacman -S dosfstools os-prober mtools network-manager-applet wpa_supplicant dialog
 
