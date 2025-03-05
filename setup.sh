@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e 
+set -e
 
 #!/bin/bash
 
@@ -30,8 +30,17 @@ echo -e "
 _/j  L l\_!  _//^---^\\_
 "
 
-
 loadkeys br-abnt2
+
+lsblk
+read -p "Digite o disco onde deseja instalar (ex: /dev/sda): " DISK
+
+echo "O disco selecionado foi $DISK. Isso apagará todos os dados!"
+read -p "Deseja continuar com a instalação? (s/n): " CONFIRM
+if [[ "$CONFIRM" != "s" ]]; then
+  echo "Instação cancelada!"
+  exit 1
+fi
 
 parted -s /dev/sda mklabel gpt
 parted -s /dev/sda mkpart primary fat32 0% 1GB
@@ -51,7 +60,7 @@ mount /dev/sda1 /mnt/boot/efi
 
 pacstrap /mnt base base-devel linux linux-firmware nano dhcpcd
 
-genfstab -U -p /mnt >> /mnt/etc/fstab
+genfstab -U -p /mnt >>/mnt/etc/fstab
 
 arch-chroot /mnt <<EOF
 
@@ -92,3 +101,4 @@ systemctl enable gdm
 systemctl enable NetworkManager
 
 EOF
+
