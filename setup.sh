@@ -42,21 +42,21 @@ if [[ "$CONFIRM" != "s" ]]; then
   exit 1
 fi
 
-parted -s /dev/sda mklabel gpt
-parted -s /dev/sda mkpart primary fat32 0% 1GB
-parted -s /dev/sda set 1 boot on
-parted -s /dev/sda mkpart primary btrfs 1GB 51GB
-parted -s /dev/sda mkpart primary btrfs 51GB 100%
+parted -s $DISK mklabel gpt
+parted -s $DISK mkpart primary fat32 0% 1GB
+parted -s $DISK set 1 boot on
+parted -s $DISK mkpart primary btrfs 1GB 51GB
+parted -s $DISK mkpart primary btrfs 51GB 100%
 
-mkfs.fat -F32 /dev/sda1
-mkfs.btrfs /dev/sda2
-mkfs.btrfs /dev/sda3
+mkfs.fat -F32 ${DISK}1
+mkfs.btrfs ${DISK}2
+mkfs.btrfs ${DISK}3
 
-mount /dev/sda2 /mnt
+mount ${DISK}2 /mnt
 mkdir -p /mnt/home /mnt/boot/efi
 
-mount /dev/sda3 /mnt/home
-mount /dev/sda1 /mnt/boot/efi
+mount ${DISK}3 /mnt/home
+mount ${DISK}1 /mnt/boot/efi
 
 pacstrap /mnt base base-devel linux linux-firmware nano dhcpcd
 
@@ -101,4 +101,3 @@ systemctl enable gdm
 systemctl enable NetworkManager
 
 EOF
-
