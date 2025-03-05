@@ -42,6 +42,9 @@ if [[ "$CONFIRM" != "s" ]]; then
   exit 1
 fi
 
+read -p "Digite o nome do ususario desejado: " USERNAME
+read -s -p "Digite a senha: " PASSOWORD
+
 parted -s $DISK mklabel gpt
 parted -s $DISK mkpart primary fat32 0% 1GB
 parted -s $DISK set 1 boot on
