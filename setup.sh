@@ -43,7 +43,7 @@ if [[ "$CONFIRM" != "s" ]]; then
 fi
 
 read -p "Digite o nome do ususario desejado: " USERNAME
-read -s -p "Digite a senha: " PASSOWORD
+read -s -p "Digite a senha: " PASSWORD
 
 parted -s $DISK mklabel gpt
 parted -s $DISK mkpart primary fat32 0% 1GB
@@ -77,11 +77,7 @@ locale-gen
 
 echo KEYMAP=br-abnt2 >> /etc/vconsole.conf
 
-echo "root:Senha123$" | sudo chpasswd
-
-useradd -m -g users -G wheel, storage, power -s /bin/bash kazz
-
-echo "usuario:Senha123$" | sudo chpasswd
+echo "root:${PASSWORD}" | sudo chpasswd
 
 pacman -S dosfstools os-prober mtools network-manager-applet wpa_supplicant dialog grub efibootmgr --noconfirm
 
