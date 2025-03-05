@@ -42,7 +42,6 @@ if [[ "$CONFIRM" != "s" ]]; then
   exit 1
 fi
 
-read -p "Digite o nome do ususario desejado: " USERNAME
 read -s -p "Digite a senha: " PASSWORD
 
 parted -s $DISK mklabel gpt
