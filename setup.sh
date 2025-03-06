@@ -51,7 +51,7 @@ echo "1) GNOME"
 echo "2) KDE"
 read -p "Digite sua opcao: " GUI_INTERFACE
 
-if [[ $GUI_INTERFACE -ne && $GUI_INTERFACE -ne 2 ]]; then
+if [[ $GUI_INTERFACE -ne 1 && $GUI_INTERFACE -ne 2 ]]; then
   echo "Interface grafica invalida"
   exit 1
 fi
