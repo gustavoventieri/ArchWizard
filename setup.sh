@@ -46,6 +46,16 @@ read -s -p "Digite a senha para o usuario root: " ROOT_PASSWORD
 read -p "Digite um usuario: " USERNAME
 read -s -p "Digite a senha para o usuario: " PASSWORD
 
+echo "Escolha um ambiente gráfico: "
+echo "1) GNOME"
+echo "2) KDE"
+read -p "Digite sua opcao: " GUI_INTERFACE
+
+if [[ $GUI_INTERFACE -ne && $GUI_INTERFACE -ne 2 ]]; then
+  echo "Interface grafica invalida"
+  exit 1
+fi
+
 parted -s $DISK mklabel gpt
 parted -s $DISK mkpart primary fat32 0% 1GB
 parted -s $DISK set 1 boot on
@@ -71,7 +81,7 @@ arch-chroot /mnt <<EOF
 ln -sf /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
 
 hwclock --systohc
-
+$
 echo "pt_BR.UTF-8 UTF-8" >> /etc/locale.gen
 
 locale-gen
@@ -96,11 +106,20 @@ pacman -S xf86-video-intel --noconfirm
 pacman -S nvidia nvidia-settings --noconfirm
 pacman -S virtualbox-guest-utils --noconfirm
 
-pacman -S gnome-extra gnome-terminal --noconfirm
-pacman -S plasma-desktop konsole --noconfirm
-pacman -S gdm --noconfirm
+if [[ $GUI_INTERFACE -e 1 ]]; then
+  pacman -S gnome-extra gnome-terminal --noconfirm
+  pacman -S gdm --noconfirm
 
-systemctl enable gdm
+  systemctl enable gdm
+fi
+
+if [[ $GUI_INTERFACE -e 2 ]]; then
+  pacman -S plasma konsole --noconfirm
+  pacman -S sddm --noconfirm
+
+  systemctl enable sddm
+fi
+
 systemctl enable NetworkManager
 
 EOF
