@@ -42,7 +42,9 @@ if [[ "$CONFIRM" != "s" ]]; then
   exit 1
 fi
 
-read -s -p "Digite a senha: " PASSWORD
+read -s -p "Digite a senha para o usuario root: " ROOT_PASSWORD
+read -p "Digite um usuario: " USERNAME
+read -s -p "Digite a senha para o usuario: " PASSWORD
 
 parted -s $DISK mklabel gpt
 parted -s $DISK mkpart primary fat32 0% 1GB
@@ -76,7 +78,10 @@ locale-gen
 
 echo KEYMAP=br-abnt2 >> /etc/vconsole.conf
 
-echo "root:${PASSWORD}" | chpasswd
+echo "root:${ROOT_PASSWORD}" | chpasswd
+
+useradd -m -g users -G wheel,storage,power -s /bin/bash ${USERNAME}
+echo "${USERNAME}:${PASSWORD}" | chpasswd
 
 pacman -S dosfstools os-prober mtools network-manager-applet wpa_supplicant dialog grub efibootmgr --noconfirm
 
