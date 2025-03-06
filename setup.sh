@@ -76,7 +76,7 @@ locale-gen
 
 echo KEYMAP=br-abnt2 >> /etc/vconsole.conf
 
-echo "root:${PASSWORD}" | sudo chpasswd
+echo "root:${PASSWORD}" | chpasswd
 
 pacman -S dosfstools os-prober mtools network-manager-applet wpa_supplicant dialog grub efibootmgr --noconfirm
 
@@ -86,10 +86,10 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 pacman -S xorg-server xorg-xinit xorg-apps mesa --noconfirm
 
-sudo pacman -S xf86-video-amdgpu --noconfirm
-sudo pacman -S xf86-video-intel --noconfirm
-sudo pacman -S nvidia nvidia-settings --noconfirm
-sudo pacman -S virtualbox-guest-utils --noconfirm
+pacman -S xf86-video-amdgpu --noconfirm
+pacman -S xf86-video-intel --noconfirm
+pacman -S nvidia nvidia-settings --noconfirm
+pacman -S virtualbox-guest-utils --noconfirm
 
 pacman -S gnome-extra gnome-terminal --noconfirm
 pacman -S plasma-desktop konsole --noconfirm
